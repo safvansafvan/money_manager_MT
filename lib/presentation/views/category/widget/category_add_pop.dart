@@ -1,8 +1,11 @@
+import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moneymanager/domain/model/category/category_model.dart';
 import 'package:moneymanager/presentation/getx/category_db_controller.dart';
 import 'package:moneymanager/utils/constant/color.dart';
+import 'package:moneymanager/utils/constant/duration.dart';
+import 'package:moneymanager/utils/resouces/res.dart';
 
 ValueNotifier<CategoryType> selectedCategoryNotifier =
     ValueNotifier(CategoryType.income);
@@ -10,27 +13,32 @@ ValueNotifier<CategoryType> selectedCategoryNotifier =
 Future<void> showCategoryPopUp(BuildContext context) async {
   final categoryController = Get.find<CategoryDbController>();
   final TextEditingController addCategoryController = TextEditingController();
-  showDialog(
+  showAlignedDialog(
+    barrierColor: Colors.transparent,
+    duration: AppDuration.appDuration,
+    followerAnchor: Alignment.center,
+    targetAnchor: Alignment.center,
     context: context,
     builder: (context) => SimpleDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
+      backgroundColor: CustomColors.kwhite,
+      shadowColor: CustomColors.kblack,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       title: const Text('Add Category'),
       children: [
+        const Divider(),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 5),
           child: TextFormField(
             controller: addCategoryController,
             decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide:
-                        BorderSide(color: CustomColors.commonClr, width: 1.5)),
-                hintText: 'Category Name',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                )),
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(color: Colors.grey[400]!)),
+              hintText: 'Category Name',
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
           ),
         ),
         const Padding(
@@ -46,21 +54,32 @@ Future<void> showCategoryPopUp(BuildContext context) async {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: ElevatedButton(
-              onPressed: () async {
-                final name = addCategoryController.text;
-                if (name.isEmpty) {
-                  return;
-                }
-                final type = selectedCategoryNotifier.value;
-                final category = CategoryModel(
-                    id: DateTime.now().millisecondsSinceEpoch.toString(),
-                    name: name,
-                    type: type);
-                await categoryController.insertCategory(category);
-                // ignore: use_build_context_synchronously
-                Navigator.of(context).pop();
-              },
-              child: const Text('Add')),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: CustomColors.appClr,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10))),
+            onPressed: () async {
+              final name = addCategoryController.text;
+              if (name.isEmpty) {
+                return;
+              }
+              final type = selectedCategoryNotifier.value;
+              final category = CategoryModel(
+                  id: DateTime.now().millisecondsSinceEpoch.toString(),
+                  name: name,
+                  type: type);
+              await categoryController.insertCategory(category);
+              Get.back();
+            },
+            child: Text(
+              'Add Category',
+              style: CustomFuction.style(
+                fontWeight: FontWeight.w500,
+                size: 14,
+                color: CustomColors.kwhite,
+              ),
+            ),
+          ),
         )
       ],
     ),

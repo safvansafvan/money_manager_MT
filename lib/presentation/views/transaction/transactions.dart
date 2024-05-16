@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:moneymanager/presentation/getx/transaction_db_controller.dart';
 import 'package:moneymanager/presentation/views/category/category.dart';
 import 'package:moneymanager/presentation/views/search/search_transaction.dart';
-import 'package:moneymanager/presentation/views/settings/settins.dart';
+import 'package:moneymanager/presentation/views/settings/settings.dart';
 import 'package:moneymanager/presentation/views/transaction/widgets/custom_cliper_shape.dart';
 import 'package:moneymanager/presentation/views/transaction/widgets/money_status_bar.dart';
 import 'package:moneymanager/presentation/widgets/common_header.dart';
