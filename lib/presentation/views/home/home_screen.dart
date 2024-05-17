@@ -4,10 +4,14 @@ import 'package:moneymanager/presentation/views/transaction/add_transaction/add_
 import 'package:moneymanager/presentation/views/transaction/transactions.dart';
 import 'package:moneymanager/utils/constant/duration.dart';
 
-// ignore: must_be_immutable
-class MyHomeScreen extends StatelessWidget {
+class MyHomeScreen extends StatefulWidget {
   const MyHomeScreen({super.key});
 
+  @override
+  State<MyHomeScreen> createState() => _MyHomeScreenState();
+}
+
+class _MyHomeScreenState extends State<MyHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

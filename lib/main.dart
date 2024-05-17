@@ -7,6 +7,9 @@ import 'package:moneymanager/domain/model/transaction.dart/transaction_model.dar
 import 'package:moneymanager/presentation/views/splash/screen_loding.dart';
 import 'package:moneymanager/utils/constant/color.dart';
 import 'package:moneymanager/utils/resouces/init_controllers.dart';
+import 'package:moneymanager/utils/resouces/notification.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +25,12 @@ void main() async {
     Hive.registerAdapter(TransactionModelAdapter());
   }
 
+  // NotificationSetup.scheduleDailyNotification();
+  tz.initializeTimeZones();
+  tz.setLocalLocation(tz.getLocation('Asia/Kolkata'));
+  NotificationSetup.init();
   InitCtrl().init();
+  await NotificationSetup.scheduleDailyNotification();
   runApp(const MyApp());
 }
 

@@ -23,6 +23,8 @@ dependencies:
   get: ^4.6.6
   slider_button: ^2.1.0
   aligned_dialog: ^0.0.7
+  flutter_local_notifications: ^17.1.2
+  timezone: ^0.9.3
 
 dev_dependencies:
   flutter_test:
