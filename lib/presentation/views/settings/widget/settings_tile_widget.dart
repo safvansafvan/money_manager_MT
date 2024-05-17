@@ -1,3 +1,4 @@
+import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moneymanager/presentation/getx/category_db_controller.dart';
@@ -69,10 +70,17 @@ class SettingsTileWidget extends StatelessWidget {
   }
 
   Future<void> restAppDialog(ctx) async {
-    showDialog(
+    showAlignedDialog(
+      followerAnchor: Alignment.topCenter,
+      targetAnchor: Alignment.topCenter,
+      barrierColor: Colors.transparent,
+      duration: AppDuration.appDuration,
       context: ctx,
       builder: (context) {
         return SimpleDialog(
+          shadowColor: CustomColors.kblack,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           contentPadding: const EdgeInsets.all(25),
           backgroundColor: Colors.red,
           children: [
@@ -87,8 +95,7 @@ class SettingsTileWidget extends StatelessWidget {
             ElevatedButton.icon(
               onPressed: () async {
                 await resetApplication();
-                // ignore: use_build_context_synchronously
-                Navigator.pop(context);
+                Get.back();
               },
               icon: const Icon(Icons.restore),
               label: const Text('Reset'),
