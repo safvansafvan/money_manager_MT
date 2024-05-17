@@ -16,7 +16,7 @@ class EditTransactions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final globelController = Get.put(GlobelController());
+    final globelController = Get.find<GlobelController>();
     globelController.selectedCategoryType = object?.type;
     globelController.selectedCategoryModel = object?.category;
     globelController.selectedDate = object?.date;
@@ -51,8 +51,8 @@ class EditTransactions extends StatelessWidget {
       context,
       TextEditingController editAmountController,
       TextEditingController editPurposeController) async {
-    final globelController = Get.put(GlobelController());
-    final transactionController = Get.put(TransactionDbController());
+    final globelController = Get.find<GlobelController>();
+    final transactionController = Get.find<TransactionDbController>();
     if (globelController.selectIdDrop == null) {
       return messageToast('Category Is Required');
     }

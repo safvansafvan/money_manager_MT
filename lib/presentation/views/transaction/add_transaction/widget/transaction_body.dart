@@ -27,8 +27,8 @@ class TransactionBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
-    final controller = Get.put(GlobelController());
-    final categoryController = Get.put(CategoryDbController());
+    final controller = Get.find<GlobelController>();
+    final categoryController = Get.find<CategoryDbController>();
     return Column(
       children: [
         SelectDateButton(
@@ -150,8 +150,8 @@ class TransactionBody extends StatelessWidget {
   }
 
   Future<void> addTrasnsaction(context) async {
-    final globelController = Get.put(GlobelController());
-    final transactionController = Get.put(TransactionDbController());
+    final globelController = Get.find<GlobelController>();
+    final transactionController = Get.find<TransactionDbController>();
     if (globelController.selectIdDrop == null) {
       return messageToast('Category Is Required');
     }

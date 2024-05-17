@@ -11,7 +11,7 @@ class MyHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: const TrasactionsScreen(),
+      body: const TransactionHomeView(),
       floatingActionButton: FloatingActionButton.small(
         tooltip: "Add",
         child: const Icon(Icons.add),

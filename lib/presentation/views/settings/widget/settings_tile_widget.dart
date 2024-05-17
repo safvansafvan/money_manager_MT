@@ -108,8 +108,8 @@ class SettingsTileWidget extends StatelessWidget {
   }
 
   Future<void> resetApplication() async {
-    final tController = Get.put(TransactionDbController());
-    final cController = Get.put(CategoryDbController());
+    final tController = Get.find<TransactionDbController>();
+    final cController = Get.find<CategoryDbController>();
     await cController.removeAllCategory();
     await tController.removeAllTransactions();
   }

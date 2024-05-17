@@ -99,7 +99,7 @@ class FeedbackS extends StatelessWidget {
   }
 
   Future<void> conformButtonClick(ctx) async {
-    final internetController = Get.put(InternetController());
+    final internetController = Get.find<InternetController>();
     await internetController.checkInternet();
 
     if (nameController.text.isEmpty) {

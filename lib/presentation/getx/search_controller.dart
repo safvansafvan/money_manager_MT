@@ -10,7 +10,7 @@ class TransactionSearchController extends GetxController {
 
   void searchTransaction(String query) {
     List<TransactionModel> result = [];
-    final tController = Get.put(TransactionDbController());
+    final tController = Get.find<TransactionDbController>();
     if (query.isEmpty) {
       result = tController.transaction;
       searchList = result;
@@ -28,14 +28,14 @@ class TransactionSearchController extends GetxController {
   }
 
   void clearFieldText() {
-    final tController = Get.put(TransactionDbController());
+    final tController = Get.find<TransactionDbController>();
     searchController.clear();
     searchList = tController.transaction;
     update();
   }
 
   void initialValues() {
-    final tController = Get.put(TransactionDbController());
+    final tController = Get.find<TransactionDbController>();
     searchList = tController.transaction;
     update();
   }

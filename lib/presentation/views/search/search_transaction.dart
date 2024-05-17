@@ -16,7 +16,7 @@ class SearchTransaction extends StatefulWidget {
 class _SearchTransactionState extends State<SearchTransaction> {
   @override
   void initState() {
-    final searchController = Get.put(TransactionSearchController());
+    final searchController = Get.find<TransactionSearchController>();
     searchController.initialValues();
     super.initState();
   }

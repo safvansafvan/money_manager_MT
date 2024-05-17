@@ -17,7 +17,9 @@ class _AddTransactionState extends State<AddTransaction> {
 
   @override
   void initState() {
-    Get.put(GlobelController(), permanent: true).setDefultIncomeCategory();
+    final gc = Get.find<GlobelController>();
+    gc.setDefultIncomeCategory();
+    gc.selectIdDrop = null;
     super.initState();
   }
 

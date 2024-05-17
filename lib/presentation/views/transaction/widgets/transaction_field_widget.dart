@@ -23,7 +23,7 @@ class TransactionFieldWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final transactionController = Get.put(TransactionDbController());
+    final transactionController = Get.find<TransactionDbController>();
     return Slidable(
       endActionPane: ActionPane(motion: const ScrollMotion(), children: [
         SlidableAction(

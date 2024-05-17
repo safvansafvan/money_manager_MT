@@ -26,8 +26,8 @@ class EditTransactionBody extends StatelessWidget {
   final TransactionModel? object;
   @override
   Widget build(BuildContext context) {
-    final categoryController = Get.put(CategoryDbController());
-    final globelController = Get.put(GlobelController());
+    final categoryController = Get.find<CategoryDbController>();
+    final globelController = Get.find<GlobelController>();
     var screenSize = MediaQuery.of(context).size;
 
     return Column(
