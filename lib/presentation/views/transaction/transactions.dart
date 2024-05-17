@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -54,12 +56,16 @@ class TransactionHomeView extends StatelessWidget {
                           icon:
                               Icon(Icons.settings, color: CustomColors.kwhite),
                         ),
-                        Text(
-                          "WALLET APP",
-                          style: CustomFuction.style(
-                              fontWeight: FontWeight.w600,
-                              size: 17,
-                              color: CustomColors.kwhite),
+                        Padding(
+                          padding:
+                              EdgeInsets.only(top: Platform.isIOS ? 18 : 0),
+                          child: Text(
+                            "WALLET APP",
+                            style: CustomFuction.style(
+                                fontWeight: FontWeight.w600,
+                                size: 17,
+                                color: CustomColors.kwhite),
+                          ),
                         ),
                         IconButton(
                           onPressed: () async {
