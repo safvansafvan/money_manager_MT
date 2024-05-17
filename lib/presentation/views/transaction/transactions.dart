@@ -15,13 +15,13 @@ import 'package:moneymanager/utils/resouces/res.dart';
 
 import 'widgets/transaction_field_widget.dart';
 
-class TrasactionsScreen extends StatelessWidget {
-  const TrasactionsScreen({super.key});
+class TransactionHomeView extends StatelessWidget {
+  const TransactionHomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Get.put(TransactionDbController()).calculateIncomeAndExpence();
+      Get.find<TransactionDbController>().calculateIncomeAndExpence();
     });
     var screenSize = MediaQuery.of(context).size;
     return SingleChildScrollView(
@@ -94,52 +94,103 @@ class TrasactionsScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 commonHeader('Last Transations'),
-                InkWell(
-                  onTap: () async {
-                    await Get.to(() => const CategoryScreen(),
-                        curve: Curves.easeOut,
-                        transition: Transition.size,
-                        duration: AppDuration.appDuration);
-                  },
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: CustomColors.appClr,
-                      borderRadius: BorderRadius.circular(10),
+                Row(
+                  children: [
+                    GetBuilder<TransactionDbController>(builder: (ctrl) {
+                      return InkWell(
+                        onTap: () async {
+                          if (ctrl.isDateFiltering == false) {
+                            ctrl.dateFilteringState(true);
+                            DateTimeRange? newDateRange =
+                                await showDateRangePicker(
+                              context: context,
+                              firstDate: DateTime(2024),
+                              lastDate: DateTime(2025),
+                              initialDateRange: ctrl.dateRange,
+                            );
+                            if (newDateRange != null) {
+                              ctrl.filterByDateRange(newDateRange);
+                            }
+                          } else {
+                            ctrl.dateFilteringState(false);
+                          }
+                        },
+                        child: Icon(
+                          ctrl.isDateFiltering == true
+                              ? Icons.restart_alt
+                              : Icons.filter_list,
+                          color: CustomColors.appClr,
+                        ),
+                      );
+                    }),
+                    CustomWidth.widthFive(context),
+                    GetBuilder<TransactionDbController>(builder: (ctrl) {
+                      return InkWell(
+                          onTap: () {
+                            ctrl.toggleSortOrder();
+                          },
+                          child: Icon(
+                            ctrl.isAscending
+                                ? Icons.arrow_upward
+                                : Icons.arrow_downward,
+                            color: CustomColors.appClr,
+                          ));
+                    }),
+                    CustomWidth.widthFive(context),
+                    InkWell(
+                      onTap: () async {
+                        await Get.to(() => const CategoryScreen(),
+                            curve: Curves.easeOut,
+                            transition: Transition.size,
+                            duration: AppDuration.appDuration);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: CustomColors.appClr,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          'Statics',
+                          style: CustomFuction.style(
+                              fontWeight: FontWeight.w500,
+                              size: 13,
+                              color: CustomColors.kwhite),
+                        ),
+                      ),
                     ),
-                    child: Text(
-                      'Statics',
-                      style: CustomFuction.style(
-                          fontWeight: FontWeight.w500,
-                          size: 13,
-                          color: CustomColors.kwhite),
-                    ),
-                  ),
+                  ],
                 ),
               ],
             ),
           ),
-          GetBuilder<TransactionDbController>(builder: (controller) {
-            if (controller.transaction.isEmpty) {
-              return emptyLottiePop(
-                  messsage: 'No Transaction', screenSize: screenSize);
-            }
-            return ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                final values = controller.transaction[index];
-                String date = DateFormat.MMMd().format(values.date);
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: TransactionFieldWidget(
-                      screenSize: screenSize, values: values, date: date),
-                );
-              },
-              itemCount: controller.transaction.length,
-            );
-          })
+          GetBuilder<TransactionDbController>(
+            builder: (controller) {
+              if (controller.transaction.isEmpty) {
+                return emptyLottiePop(
+                    messsage: 'No Transaction', screenSize: screenSize);
+              }
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemBuilder: (context, index) {
+                  final values = controller.isDateFiltering
+                      ? controller.dateFilter[index]
+                      : controller.transaction[index];
+                  String date = DateFormat.MMMd().format(values.date);
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    child: TransactionFieldWidget(
+                        screenSize: screenSize, values: values, date: date),
+                  );
+                },
+                itemCount: controller.isDateFiltering
+                    ? controller.dateFilter.length
+                    : controller.transaction.length,
+              );
+            },
+          )
         ],
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:moneymanager/domain/model/transaction.dart/transaction_model.dart';
@@ -10,7 +11,36 @@ class TransactionDbController extends GetxController {
   RxDouble expence = 0.0.obs;
   RxDouble balance = 0.0.obs;
   List<TransactionModel> transaction = [];
-  List<TransactionModel> transactionFilter = [];
+  List<TransactionModel> dateFilter = [];
+  bool isAscending = true;
+  bool isDateFiltering = false;
+
+  void dateFilteringState(bool v) {
+    isDateFiltering = v;
+    update();
+  }
+
+  void toggleSortOrder() {
+    isAscending = !isAscending;
+    sortTransactions();
+    update();
+  }
+
+  void sortTransactions() {
+    transaction.sort((a, b) =>
+        isAscending ? a.date.compareTo(b.date) : b.date.compareTo(a.date));
+  }
+
+  DateTimeRange? dateRange;
+
+  void filterByDateRange(DateTimeRange range) {
+    dateRange = range;
+    dateFilter = transaction.where((tx) {
+      return tx.date.isAfter(range.start) && tx.date.isBefore(range.end);
+    }).toList();
+    update();
+  }
+
   Future<void> insertTransaction(TransactionModel value) async {
     final transactionBox =
         await Hive.openBox<TransactionModel>(transactionDbName);
@@ -35,9 +65,7 @@ class TransactionDbController extends GetxController {
     final list = await getTransactions();
     list.sort((first, second) => second.date.compareTo(first.date));
     transaction.clear();
-    transactionFilter.clear();
     transaction.addAll(list);
-    transactionFilter.addAll(list);
     calculateIncomeAndExpence();
     update();
   }

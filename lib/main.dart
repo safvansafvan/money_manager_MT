@@ -5,6 +5,8 @@ import 'package:moneymanager/config/theme.dart';
 import 'package:moneymanager/domain/model/category/category_model.dart';
 import 'package:moneymanager/domain/model/transaction.dart/transaction_model.dart';
 import 'package:moneymanager/presentation/views/splash/screen_loding.dart';
+import 'package:moneymanager/utils/constant/color.dart';
+import 'package:moneymanager/utils/resouces/init_controllers.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +21,8 @@ void main() async {
   if (!Hive.isAdapterRegistered(TransactionModelAdapter().typeId)) {
     Hive.registerAdapter(TransactionModelAdapter());
   }
+
+  InitCtrl().init();
   runApp(const MyApp());
 }
 
@@ -30,7 +34,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'money manager',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: CustomColors.appClr),
         useMaterial3: true,
         floatingActionButtonTheme: AppTheme.floatingActionButtonTheme,
         appBarTheme: AppTheme.appBarTheme,

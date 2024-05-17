@@ -20,8 +20,8 @@ class _InitialScreenState extends State<InitialScreen> {
   void initState() {
     super.initState();
     navigation(context);
-    Get.put(CategoryDbController()).reloadUi();
-    Get.put(TransactionDbController()).refreshTransaction();
+    Get.find<CategoryDbController>().reloadUi();
+    Get.find<TransactionDbController>().refreshTransaction();
   }
 
   @override

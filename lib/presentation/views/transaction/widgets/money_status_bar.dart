@@ -9,7 +9,7 @@ class MoneyStatusBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final transactionController = Get.put(TransactionDbController());
+    final transactionController = Get.find<TransactionDbController>();
     return Obx(
       () => Container(
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
