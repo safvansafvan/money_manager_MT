@@ -8,7 +8,7 @@ class SearchBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final searchController = Get.put(TransactionSearchController());
+    final searchController = Get.find<TransactionSearchController>();
 
     return Container(
       height: 55,

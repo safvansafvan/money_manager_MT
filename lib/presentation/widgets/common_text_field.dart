@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moneymanager/utils/constant/color.dart';
 
 // ignore: must_be_immutable
 class CommonTextFormField extends StatelessWidget {
@@ -22,14 +23,15 @@ class CommonTextFormField extends StatelessWidget {
       height: screenSize.height * 0.074,
       width: double.infinity,
       child: TextFormField(
+        cursorColor: CustomColors.appClr,
         controller: controller,
         maxLength: maxLength,
         maxLines: 1,
         decoration: InputDecoration(
-          focusedBorder: InputBorder.none,
-          enabledBorder: InputBorder.none,
-          hintText: "   $title",
-        ),
+            focusedBorder: InputBorder.none,
+            enabledBorder: InputBorder.none,
+            hintText: title,
+            contentPadding: EdgeInsets.zero),
         keyboardType: keyboardType,
         validator: (value) {
           if (value!.isEmpty) {

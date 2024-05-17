@@ -3,12 +3,12 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:moneymanager/config/theme.dart';
 import 'package:moneymanager/presentation/getx/internet_controller.dart';
 import 'package:moneymanager/presentation/views/settings/view/widget/feedback_tile.dart';
 import 'package:moneymanager/presentation/widgets/toast_msg.dart';
 import 'package:moneymanager/utils/constant/color.dart';
 import 'package:moneymanager/utils/resouces/res.dart';
-import '../../../widgets/slider_button.dart';
 
 // ignore: must_be_immutable
 class FeedbackS extends StatelessWidget {
@@ -81,30 +81,25 @@ class FeedbackS extends StatelessWidget {
             ),
           ),
           CustomHeights.commonheight(context),
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 75.0),
-            child: SliderButtonWidget(
-              text: ' Slide To Conform ',
-            ),
-          )
-          // Container(
-          //   margin: const EdgeInsets.symmetric(horizontal: 20),
-          //   child: ElevatedButton.icon(
-          //       onPressed: () async {
-          //         if (globalKey.currentState!.validate()) {
-          //           await conformButtonClick(context);
-          //         }
-          //       },
-          //       icon: const Icon(Icons.check),
-          //       label: const Text('Conform')),
-          // ),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            child: ElevatedButton.icon(
+                style: AppTheme.buttonStyle,
+                onPressed: () async {
+                  if (globalKey.currentState!.validate()) {
+                    await conformButtonClick(context);
+                  }
+                },
+                icon: const Icon(Icons.check),
+                label: const Text('Conform')),
+          ),
         ],
       ),
     );
   }
 
   Future<void> conformButtonClick(ctx) async {
-    final internetController = Get.put(InternetController());
+    final internetController = Get.find<InternetController>();
     await internetController.checkInternet();
 
     if (nameController.text.isEmpty) {

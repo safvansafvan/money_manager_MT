@@ -4,74 +4,42 @@ import 'package:moneymanager/domain/model/transaction.dart/transaction_model.dar
 import 'package:moneymanager/presentation/getx/globel_controller.dart';
 import 'package:moneymanager/presentation/getx/transaction_db_controller.dart';
 import 'package:moneymanager/presentation/views/transaction/edit_transactions/widget/edit_body.dart';
-import 'package:moneymanager/presentation/widgets/snack_bar.dart';
-import 'package:moneymanager/utils/constant/color.dart';
-import 'package:moneymanager/utils/resouces/res.dart';
+import 'package:moneymanager/presentation/widgets/toast_msg.dart';
 
 // ignore: must_be_immutable
 class EditTransactions extends StatelessWidget {
-  EditTransactions({super.key, required this.object});
+  EditTransactions({super.key, this.object});
 
-  final TransactionModel object;
+  final TransactionModel? object;
 
   GlobalKey<FormState> globalKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    final globelController = Get.put(GlobelController());
-    globelController.selectedCategoryType = object.type;
-    globelController.selectedCategoryModel = object.category;
-    globelController.selectedDate = object.date;
+    final globelController = Get.find<GlobelController>();
+    globelController.selectedCategoryType = object?.type;
+    globelController.selectedCategoryModel = object?.category;
+    globelController.selectedDate = object?.date;
     TextEditingController editPurposeController =
-        TextEditingController(text: object.purpose);
+        TextEditingController(text: object?.purpose);
     TextEditingController editAmountController =
-        TextEditingController(text: object.amount.toString());
+        TextEditingController(text: object?.amount.toString());
+
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Update Transaction'),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(10),
           child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    CircleAvatar(
-                      radius: 25,
-                      child: IconButton(
-                          onPressed: () => Navigator.pop(context),
-                          icon: Icon(
-                            Icons.arrow_back_ios_rounded,
-                            color: CustomColors.kblack,
-                          )),
-                    ),
-                    Text(
-                      'Update Transaction',
-                      style: CustomFuction.style(
-                          fontWeight: FontWeight.w600,
-                          size: 17,
-                          color: CustomColors.kblack),
-                    ),
-                    CircleAvatar(
-                      radius: 25,
-                      child: IconButton(
-                          onPressed: () async {
-                            if (globalKey.currentState!.validate()) {
-                              await updateTransaction(context,
-                                  editAmountController, editPurposeController);
-                            }
-                          },
-                          icon: Icon(Icons.check, color: CustomColors.kblack)),
-                    )
-                  ],
-                ),
-                Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    child: EditTransactionBody(
-                        editAmountController: editAmountController,
-                        editPurposeController: editPurposeController,
-                        globalKey: globalKey)),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              child: EditTransactionBody(
+                  object: object,
+                  editAmountController: editAmountController,
+                  editPurposeController: editPurposeController,
+                  globalKey: globalKey),
             ),
           ),
         ),
@@ -83,28 +51,26 @@ class EditTransactions extends StatelessWidget {
       context,
       TextEditingController editAmountController,
       TextEditingController editPurposeController) async {
-    final globelController = Get.put(GlobelController());
-    final transactionController = Get.put(TransactionDbController());
+    final globelController = Get.find<GlobelController>();
+    final transactionController = Get.find<TransactionDbController>();
     if (globelController.selectIdDrop == null) {
-      return snakBarWidget(context, 'Category Is Required', CustomColors.kred);
+      return messageToast('Category Is Required');
     }
     if (globelController.selectedCategoryModel == null) {
-      return snakBarWidget(
-          context, 'Select Income Or Expence', CustomColors.kred);
+      return messageToast('Select Income Or Expence');
     }
     if (globelController.selectedDate == null) {
-      return snakBarWidget(context, 'Date Is Required', CustomColors.kred);
+      return messageToast('Date Is Required');
     }
     final amount = double.tryParse(editAmountController.text);
     final model = TransactionModel(
-        id: object.id,
+        id: object?.id ?? '',
         purpose: editPurposeController.text,
         amount: amount ?? 0.0,
         date: globelController.selectedDate!,
         type: globelController.selectedCategoryType!,
         category: globelController.selectedCategoryModel!);
-    await transactionController.insertTransaction(model);
-    // ignore: use_build_context_synchronously
+    await transactionController.editTransaction(model);
     Navigator.pop(context);
   }
 }

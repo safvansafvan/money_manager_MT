@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:moneymanager/config/theme.dart';
 import 'package:moneymanager/domain/model/category/category_model.dart';
+import 'package:moneymanager/domain/model/transaction.dart/transaction_model.dart';
 import 'package:moneymanager/presentation/getx/category_db_controller.dart';
 import 'package:moneymanager/presentation/getx/globel_controller.dart';
+import 'package:moneymanager/presentation/getx/transaction_db_controller.dart';
 import 'package:moneymanager/presentation/views/transaction/add_transaction/widget/select_date_button.dart';
 import 'package:moneymanager/presentation/views/transaction/add_transaction/widget/text_form_fields_widget.dart';
-import 'package:moneymanager/presentation/widgets/slider_button.dart';
+import 'package:moneymanager/presentation/widgets/toast_msg.dart';
 import 'package:moneymanager/utils/constant/color.dart';
 import 'package:moneymanager/utils/resouces/res.dart';
 
@@ -25,8 +27,8 @@ class TransactionBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
-    final controller = Get.put(GlobelController());
-    final categoryController = Get.put(CategoryDbController());
+    final controller = Get.find<GlobelController>();
+    final categoryController = Get.find<CategoryDbController>();
     return Column(
       children: [
         SelectDateButton(
@@ -67,10 +69,13 @@ class TransactionBody extends StatelessWidget {
           );
         }),
         CustomHeights.heightFive(context),
-        TextFormFieldsWidget(
-            globalKey: globalKey,
-            purposeController: purposeController,
-            amountController: amountController),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: TextFormFieldsWidget(
+              globalKey: globalKey,
+              purposeController: purposeController,
+              amountController: amountController),
+        ),
         CustomHeights.heightFive(context),
         GetBuilder<GlobelController>(
           builder: (ctrl) {
@@ -128,8 +133,44 @@ class TransactionBody extends StatelessWidget {
           },
         ),
         CustomHeights.minimumHeight(context),
-        const SliderButtonWidget(text: 'Slide to add transation')
+        SizedBox(
+          width: context.width - 50,
+          child: ElevatedButton.icon(
+              style: AppTheme.buttonStyle,
+              onPressed: () async {
+                if (globalKey.currentState!.validate()) {
+                  addTrasnsaction(context);
+                }
+              },
+              icon: const Icon(Icons.check),
+              label: const Text('Conform')),
+        ),
       ],
     );
+  }
+
+  Future<void> addTrasnsaction(context) async {
+    final globelController = Get.find<GlobelController>();
+    final transactionController = Get.find<TransactionDbController>();
+    if (globelController.selectIdDrop == null) {
+      return messageToast('Category Is Required');
+    }
+    if (globelController.selectedCategoryModel == null) {
+      return messageToast('Select Income Or Expence');
+    }
+    if (globelController.selectedDate == null) {
+      return messageToast('Date Is Required');
+    }
+    final amount = double.parse(amountController.text);
+    final model = TransactionModel(
+        id: DateTime.now().millisecondsSinceEpoch.toString(),
+        purpose: purposeController.text,
+        amount: amount,
+        date: globelController.selectedDate!,
+        type: globelController.selectedCategoryType!,
+        category: globelController.selectedCategoryModel!);
+    await transactionController.insertTransaction(model);
+    // ignore: use_build_context_synchronously
+    Navigator.pop(context);
   }
 }
