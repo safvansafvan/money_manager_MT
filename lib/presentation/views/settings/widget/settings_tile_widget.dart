@@ -1,6 +1,7 @@
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moneymanager/config/theme.dart';
 import 'package:moneymanager/presentation/getx/category_db_controller.dart';
 import 'package:moneymanager/presentation/getx/transaction_db_controller.dart';
 import 'package:moneymanager/presentation/views/settings/view/feedback.dart';
@@ -78,21 +79,21 @@ class SettingsTileWidget extends StatelessWidget {
       context: ctx,
       builder: (context) {
         return SimpleDialog(
+          backgroundColor: CustomColors.kwhite,
           shadowColor: CustomColors.kblack,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
           contentPadding: const EdgeInsets.all(25),
-          backgroundColor: Colors.red,
           children: [
             Text(
               'Do You Want To Delete All App Data',
               style: CustomFuction.style(
-                  color: CustomColors.kwhite,
-                  fontWeight: FontWeight.w600,
-                  size: 16),
+                  color: Colors.red, fontWeight: FontWeight.w600, size: 16),
             ),
             CustomHeights.heightFive(context),
             ElevatedButton.icon(
+              style: AppTheme.buttonStyle,
               onPressed: () async {
                 await resetApplication();
                 Get.back();

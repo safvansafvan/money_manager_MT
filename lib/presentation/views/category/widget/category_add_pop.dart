@@ -1,6 +1,7 @@
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:moneymanager/config/theme.dart';
 import 'package:moneymanager/domain/model/category/category_model.dart';
 import 'package:moneymanager/presentation/getx/category_db_controller.dart';
 import 'package:moneymanager/utils/constant/color.dart';
@@ -54,10 +55,7 @@ Future<void> showCategoryPopUp(BuildContext context) async {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                backgroundColor: CustomColors.appClr,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10))),
+            style: AppTheme.buttonStyle,
             onPressed: () async {
               final name = addCategoryController.text;
               if (name.isEmpty) {

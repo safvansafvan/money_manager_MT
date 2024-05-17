@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moneymanager/utils/constant/color.dart';
+import 'package:moneymanager/utils/constant/duration.dart';
 import 'package:moneymanager/utils/resouces/res.dart';
 
 class AppTheme {
@@ -19,4 +20,19 @@ class AppTheme {
     foregroundColor: CustomColors.kwhite,
     titleTextStyle: CustomFuction.style(fontWeight: FontWeight.w600, size: 17),
   );
+
+  static ButtonStyle buttonStyle = ElevatedButton.styleFrom(
+    backgroundColor: CustomColors.appClr,
+    foregroundColor: CustomColors.kwhite,
+    animationDuration: AppDuration.appDuration,
+    elevation: 5,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(10),
+    ),
+  );
+
+  static TextStyle style1 = TextStyle(
+      fontWeight: FontWeight.w400, fontSize: 14, color: CustomColors.kblack);
+  static TextStyle style2 = TextStyle(
+      fontWeight: FontWeight.w600, fontSize: 14, color: CustomColors.kblack);
 }

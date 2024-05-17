@@ -24,10 +24,10 @@ class TextFormFieldsWidget extends StatelessWidget {
         children: [
           CommonTextFormField(
               screenSize: screenSize,
-              maxLength: 15,
+              maxLength: 100,
               keyboardType: TextInputType.name,
               controller: purposeController,
-              title: 'Purpose'),
+              title: 'Description'),
           CustomHeights.heightFive(context),
           CommonTextFormField(
               screenSize: screenSize,
