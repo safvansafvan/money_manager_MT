@@ -47,20 +47,27 @@ class _LoginViewState extends State<LoginView> {
                       ),
                     ),
                     lCtrl.isLogin == false
-                        ? const SizedBox(height: 180)
-                        : const SizedBox(height: 50),
+                        ? SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.15)
+                        : SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.15),
                     lCtrl.isLogin == false
                         ? const LoginWidget()
                         : const SignUpWid(),
                     GestureDetector(
                       onTap: () {
                         lCtrl.loginState();
+                        if (lCtrl.isLogin) {
+                          lCtrl.clearController();
+                        } else {
+                          lCtrl.clearController1();
+                        }
                       },
                       child: RichText(
                         text: TextSpan(
                           text: lCtrl.isLogin == false
                               ? "Don't have An Account ?"
-                              : 'have An Account ?',
+                              : 'Have An Account ?',
                           style: TextStyle(color: CustomColors.kgrey),
                           children: [
                             TextSpan(

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:moneymanager/config/theme.dart';
 import 'package:moneymanager/presentation/getx/auth_controller.dart';
+import 'package:moneymanager/presentation/getx/internet_controller.dart';
 import 'package:moneymanager/presentation/views/auth/widget/login_form.dart';
+import 'package:moneymanager/presentation/widgets/toast_msg.dart';
 import 'package:moneymanager/utils/constant/color.dart';
 import 'package:moneymanager/utils/resouces/res.dart';
 
@@ -13,6 +16,8 @@ class SignUpWid extends StatelessWidget {
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
     final lCtrl = Get.find<AuthCtrl>();
+    final internetC = Get.find<InternetController>();
+
     return Padding(
       padding: const EdgeInsets.only(top: 25),
       child: AnimatedContainer(
@@ -43,13 +48,6 @@ class SignUpWid extends StatelessWidget {
                   isUsername: true,
                 ),
                 LoginFrom(
-                  label: 'Number',
-                  prefixIcon: Icons.phone,
-                  controller: lCtrl.phoneCtrl,
-                  inputType: TextInputType.number,
-                  isnumber: true,
-                ),
-                LoginFrom(
                   label: 'Password',
                   prefixIcon: Icons.key,
                   controller: lCtrl.passwordCtrl,
@@ -63,29 +61,42 @@ class SignUpWid extends StatelessWidget {
                   inputType: TextInputType.name,
                   isconformPassword: true,
                 ),
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: AppTheme.buttonStyle,
-                      onPressed: () async {
-                        if (formKey.currentState!.validate()) {}
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: Text(
-                          'SIGNUP',
-                          style: CustomFuction.style(
-                              fontWeight: FontWeight.w600,
-                              size: 16,
-                              color: CustomColors.kwhite),
-                        ),
-                      ),
-                    ),
-                  ),
-                )
+                GetBuilder<AuthCtrl>(builder: (ctrl) {
+                  return Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                    child: ctrl.isSignUpLoading
+                        ? const CircularProgressIndicator()
+                        : SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              style: AppTheme.buttonStyle,
+                              onPressed: () async {
+                                if (formKey.currentState!.validate()) {
+                                  internetC.checkInternet();
+                                  if (internetC.hasInternet.value) {
+                                    await lCtrl
+                                        .signUpWithEmailAndPassword(context);
+                                  } else {
+                                    messageToast('Internet Required');
+                                  }
+                                }
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10),
+                                child: Text(
+                                  'SIGNUP',
+                                  style: CustomFuction.style(
+                                      fontWeight: FontWeight.w600,
+                                      size: 16,
+                                      color: CustomColors.kwhite),
+                                ),
+                              ),
+                            ),
+                          ),
+                  );
+                })
               ],
             ),
           ),

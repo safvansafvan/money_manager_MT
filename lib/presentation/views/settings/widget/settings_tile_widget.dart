@@ -2,6 +2,7 @@ import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moneymanager/config/theme.dart';
+import 'package:moneymanager/presentation/getx/auth_controller.dart';
 import 'package:moneymanager/presentation/getx/category_db_controller.dart';
 import 'package:moneymanager/presentation/getx/transaction_db_controller.dart';
 import 'package:moneymanager/presentation/views/settings/view/feedback.dart';
@@ -18,13 +19,14 @@ class SettingsTileWidget extends StatelessWidget {
       required this.icon,
       required this.text,
       this.isFeedback = false,
+      this.logout,
       this.isShare = false,
       this.resetApp = false});
   final IconData icon;
   final String text;
   bool? isFeedback;
-  bool? isAboutus;
-  bool? isPrivacy;
+  bool? logout;
+
   bool? isShare;
   bool? resetApp;
   @override
@@ -40,6 +42,8 @@ class SettingsTileWidget extends StatelessWidget {
           shareApp();
         } else if (resetApp == true) {
           await restAppDialog(context);
+        } else if (logout == true) {
+          await Get.find<AuthCtrl>().logout(context);
         }
       },
       child: Container(
