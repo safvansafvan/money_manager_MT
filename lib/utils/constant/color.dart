@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class CustomColors {
+  static Color borderClr = Colors.grey[300]!;
   static Color appClr = const Color(0xff018369);
   static Color kblue = Colors.blue;
   static Color kwhite = Colors.white;

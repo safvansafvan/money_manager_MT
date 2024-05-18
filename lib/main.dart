@@ -1,9 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:moneymanager/config/theme.dart';
 import 'package:moneymanager/domain/model/category/category_model.dart';
 import 'package:moneymanager/domain/model/transaction.dart/transaction_model.dart';
+import 'package:moneymanager/firebase_options.dart';
 import 'package:moneymanager/presentation/views/splash/screen_loding.dart';
 import 'package:moneymanager/utils/constant/color.dart';
 import 'package:moneymanager/utils/resouces/init_controllers.dart';
@@ -13,7 +15,7 @@ import 'package:timezone/timezone.dart' as tz;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await Hive.initFlutter();
   if (!Hive.isAdapterRegistered(CategoryTypeAdapter().typeId)) {
     Hive.registerAdapter(CategoryTypeAdapter());
@@ -25,7 +27,6 @@ void main() async {
     Hive.registerAdapter(TransactionModelAdapter());
   }
 
-  // NotificationSetup.scheduleDailyNotification();
   tz.initializeTimeZones();
   tz.setLocalLocation(tz.getLocation('Asia/Kolkata'));
   NotificationSetup.init();

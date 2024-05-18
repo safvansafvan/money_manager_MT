@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:moneymanager/presentation/getx/auth_controller.dart';
 import 'package:moneymanager/presentation/getx/category_db_controller.dart';
 import 'package:moneymanager/presentation/getx/globel_controller.dart';
 import 'package:moneymanager/presentation/getx/internet_controller.dart';
@@ -12,6 +13,6 @@ class InitCtrl {
     Get.put(CategoryDbController());
     Get.put(InternetController());
     Get.put(TransactionSearchController());
-    Get.put(TransactionSearchController());
+    Get.put(AuthCtrl());
   }
 }
