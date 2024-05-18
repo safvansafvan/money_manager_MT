@@ -6,6 +6,7 @@ import 'package:moneymanager/presentation/views/auth/auth.dart';
 import 'package:moneymanager/presentation/views/home/home_screen.dart';
 import 'package:moneymanager/presentation/widgets/toast_msg.dart';
 import 'package:moneymanager/utils/constant/duration.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 class AuthCtrl extends GetxController {
   bool isLogin = false;
@@ -119,5 +120,17 @@ class AuthCtrl extends GetxController {
     passwordCtrl.clear();
     conformpasswordCtrl.clear();
     nameCtrl.clear();
+  }
+
+  bool hasInternet = false;
+
+  Future<void> checkInternet() async {
+    var result = await Connectivity().checkConnectivity();
+    if (result == ConnectivityResult.none) {
+      hasInternet = false;
+    } else {
+      hasInternet = true;
+    }
+    update();
   }
 }

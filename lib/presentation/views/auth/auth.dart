@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moneymanager/presentation/getx/auth_controller.dart';
+import 'package:moneymanager/presentation/controllers/auth_controller.dart';
 import 'package:moneymanager/presentation/views/auth/widget/login_wid.dart';
 import 'package:moneymanager/presentation/views/auth/widget/singup_wid.dart';
 import 'package:moneymanager/utils/constant/color.dart';

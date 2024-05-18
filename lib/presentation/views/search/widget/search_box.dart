@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moneymanager/presentation/getx/search_controller.dart';
+import 'package:moneymanager/presentation/controllers/search_controller.dart';
 import 'package:moneymanager/utils/constant/color.dart';
 
 class SearchBox extends StatelessWidget {

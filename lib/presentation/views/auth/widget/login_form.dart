@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:moneymanager/presentation/getx/auth_controller.dart';
+import 'package:moneymanager/presentation/controllers/auth_controller.dart';
 import 'package:moneymanager/utils/constant/color.dart';
 
 class LoginFrom extends StatelessWidget {

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:moneymanager/config/theme.dart';
-import 'package:moneymanager/presentation/getx/internet_controller.dart';
+import 'package:moneymanager/presentation/controllers/auth_controller.dart';
 import 'package:moneymanager/presentation/views/settings/view/widget/feedback_tile.dart';
 import 'package:moneymanager/presentation/widgets/toast_msg.dart';
 import 'package:moneymanager/utils/constant/color.dart';
@@ -99,7 +99,7 @@ class FeedbackS extends StatelessWidget {
   }
 
   Future<void> conformButtonClick(ctx) async {
-    final internetController = Get.find<InternetController>();
+    final internetController = Get.find<AuthCtrl>();
     await internetController.checkInternet();
 
     if (nameController.text.isEmpty) {
@@ -114,7 +114,7 @@ class FeedbackS extends StatelessWidget {
     if (subjectController.text.isEmpty) {
       return;
     }
-    if (internetController.hasInternet.value == false) {
+    if (internetController.hasInternet == false) {
       messageToast('Enable Internet');
     } else {
       await feedbackSent(ctx: ctx);

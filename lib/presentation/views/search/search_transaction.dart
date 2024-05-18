@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:moneymanager/presentation/getx/search_controller.dart';
+import 'package:moneymanager/presentation/controllers/search_controller.dart';
 import 'package:moneymanager/presentation/views/search/widget/search_box.dart';
 import 'package:moneymanager/presentation/views/transaction/widgets/transaction_field_widget.dart';
 import 'package:moneymanager/presentation/widgets/empty_lottie.dart';

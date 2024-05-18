@@ -3,7 +3,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:get/get.dart';
 import 'package:moneymanager/domain/model/category/category_model.dart';
 import 'package:moneymanager/domain/model/transaction.dart/transaction_model.dart';
-import 'package:moneymanager/presentation/getx/transaction_db_controller.dart';
+import 'package:moneymanager/presentation/controllers/transaction_db_controller.dart';
 import 'package:moneymanager/presentation/views/transaction/edit_transactions/edit_transactions.dart';
 import 'package:moneymanager/presentation/views/transaction/view_transaction/view_transaction.dart';
 import 'package:moneymanager/utils/constant/color.dart';

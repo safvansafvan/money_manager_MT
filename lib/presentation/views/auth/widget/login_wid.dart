@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moneymanager/config/theme.dart';
-import 'package:moneymanager/presentation/getx/auth_controller.dart';
-import 'package:moneymanager/presentation/getx/internet_controller.dart';
+import 'package:moneymanager/presentation/controllers/auth_controller.dart';
 import 'package:moneymanager/presentation/views/auth/widget/login_form.dart';
+import 'package:moneymanager/presentation/widgets/toast_msg.dart';
 import 'package:moneymanager/utils/constant/color.dart';
 import 'package:moneymanager/utils/resouces/res.dart';
 
@@ -14,7 +14,6 @@ class LoginWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
     final lCtrl = Get.find<AuthCtrl>();
-    final internetC = Get.find<InternetController>();
     return Padding(
       padding: const EdgeInsets.only(top: 25),
       child: AnimatedContainer(
@@ -51,40 +50,45 @@ class LoginWidget extends StatelessWidget {
                     child: Text('Forgot password ?'),
                   ),
                 ),
-                GetBuilder<AuthCtrl>(builder: (ctrl) {
-                  return Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                    child: ctrl.isSignInLoading
-                        ? const CircularProgressIndicator()
-                        : SizedBox(
-                            width: double.infinity,
-                            child: ElevatedButton(
-                              style: AppTheme.buttonStyle,
-                              onPressed: () async {
-                                if (formKey.currentState!.validate()) {
-                                  internetC.checkInternet();
-                                  if (internetC.hasInternet.value) {
-                                    await ctrl
-                                        .signInWithEmailAndPasswords(context);
+                GetBuilder<AuthCtrl>(
+                  builder: (ctrl) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 5),
+                      child: ctrl.isSignInLoading
+                          ? const CircularProgressIndicator()
+                          : SizedBox(
+                              width: double.infinity,
+                              child: ElevatedButton(
+                                style: AppTheme.buttonStyle,
+                                onPressed: () async {
+                                  if (formKey.currentState!.validate()) {
+                                    await ctrl.checkInternet();
+                                    if (ctrl.hasInternet) {
+                                      await ctrl.signInWithEmailAndPasswords(
+                                          // ignore: use_build_context_synchronously
+                                          context);
+                                    } else {
+                                      messageToast('Internet is required');
+                                    }
                                   }
-                                }
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 10),
-                                child: Text(
-                                  'LOGIN',
-                                  style: CustomFuction.style(
-                                      fontWeight: FontWeight.w600,
-                                      size: 16,
-                                      color: CustomColors.kwhite),
+                                },
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 10),
+                                  child: Text(
+                                    'LOGIN',
+                                    style: CustomFuction.style(
+                                        fontWeight: FontWeight.w600,
+                                        size: 16,
+                                        color: CustomColors.kwhite),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                  );
-                })
+                    );
+                  },
+                )
               ],
             ),
           ),

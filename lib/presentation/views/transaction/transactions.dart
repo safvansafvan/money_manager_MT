@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:moneymanager/presentation/getx/transaction_db_controller.dart';
+import 'package:moneymanager/presentation/controllers/transaction_db_controller.dart';
 import 'package:moneymanager/presentation/views/category/category.dart';
 import 'package:moneymanager/presentation/views/search/search_transaction.dart';
 import 'package:moneymanager/presentation/views/settings/settings.dart';
