@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moneymanager/presentation/getx/category_db_controller.dart';
+import 'package:moneymanager/presentation/controllers/category_db_controller.dart';
 import 'package:moneymanager/presentation/widgets/empty_lottie.dart';
 
 import '../widget/category_tile_widget.dart';
@@ -11,12 +11,13 @@ class IncomeTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var screenSize = MediaQuery.of(context).size;
-    return GetBuilder<CategoryDbController>(builder: (controller) {
-      if (controller.incomeCategoryList.isEmpty) {
-        return emptyLottiePop(
-            messsage: 'No Income Category', screenSize: screenSize);
-      } else {
-        return ListView.builder(
+    return GetBuilder<CategoryDbController>(
+      builder: (controller) {
+        if (controller.incomeCategoryList.isEmpty) {
+          return emptyLottiePop(
+              messsage: 'No Income Category', screenSize: screenSize);
+        } else {
+          return ListView.builder(
             itemCount: controller.incomeCategoryList.length,
             itemBuilder: (context, index) {
               final category = controller.incomeCategoryList[index];
@@ -25,8 +26,10 @@ class IncomeTabBar extends StatelessWidget {
                 child: categoryTileWidget(
                     screenSize: screenSize, category: category),
               );
-            });
-      }
-    });
+            },
+          );
+        }
+      },
+    );
   }
 }

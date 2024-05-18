@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moneymanager/config/theme.dart';
 import 'package:moneymanager/domain/model/category/category_model.dart';
-import 'package:moneymanager/presentation/getx/category_db_controller.dart';
+import 'package:moneymanager/presentation/controllers/category_db_controller.dart';
 import 'package:moneymanager/utils/constant/color.dart';
 import 'package:moneymanager/utils/constant/duration.dart';
 import 'package:moneymanager/utils/resouces/res.dart';
@@ -67,7 +67,6 @@ Future<void> showCategoryPopUp(BuildContext context) async {
                   name: name,
                   type: type);
               await categoryController.insertCategory(category);
-              Get.back();
             },
             child: Text(
               'Add Category',
@@ -93,21 +92,22 @@ class Radiobutton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(children: [
       ValueListenableBuilder(
-          valueListenable: selectedCategoryNotifier,
-          builder: (context, CategoryType newCategory, child) {
-            return Radio<CategoryType>(
-              value: type,
-              groupValue: newCategory,
-              onChanged: (value) {
-                if (value == null) {
-                  return;
-                }
-                selectedCategoryNotifier.value = value;
-                // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
-                selectedCategoryNotifier.notifyListeners();
-              },
-            );
-          }),
+        valueListenable: selectedCategoryNotifier,
+        builder: (context, CategoryType newCategory, child) {
+          return Radio<CategoryType>(
+            value: type,
+            groupValue: newCategory,
+            onChanged: (value) {
+              if (value == null) {
+                return;
+              }
+              selectedCategoryNotifier.value = value;
+              // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+              selectedCategoryNotifier.notifyListeners();
+            },
+          );
+        },
+      ),
       Text(title)
     ]);
   }

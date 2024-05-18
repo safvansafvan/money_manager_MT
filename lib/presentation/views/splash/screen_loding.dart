@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:moneymanager/presentation/getx/auth_controller.dart';
-import 'package:moneymanager/presentation/getx/category_db_controller.dart';
-import 'package:moneymanager/presentation/getx/transaction_db_controller.dart';
+import 'package:moneymanager/presentation/controllers/auth_controller.dart';
+import 'package:moneymanager/presentation/controllers/category_db_controller.dart';
+import 'package:moneymanager/presentation/controllers/transaction_db_controller.dart';
 import 'package:moneymanager/utils/constant/color.dart';
 import 'package:moneymanager/utils/resouces/res.dart';
 

@@ -37,8 +37,9 @@ class CategoryDbController extends GetxController {
 
   Future<void> remove(String id) async {
     final categoryBox = await Hive.openBox<CategoryModel>(categoryDbName);
-    categoryBox.delete(id);
+    await categoryBox.delete(id);
     await reloadUi();
+    update();
   }
 
   Future<void> removeAllCategory() async {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moneymanager/domain/model/transaction.dart/transaction_model.dart';
-import 'package:moneymanager/presentation/getx/globel_controller.dart';
-import 'package:moneymanager/presentation/getx/transaction_db_controller.dart';
+import 'package:moneymanager/presentation/controllers/globel_controller.dart';
+import 'package:moneymanager/presentation/controllers/transaction_db_controller.dart';
 import 'package:moneymanager/presentation/views/transaction/edit_transactions/widget/edit_body.dart';
 import 'package:moneymanager/presentation/widgets/toast_msg.dart';
 

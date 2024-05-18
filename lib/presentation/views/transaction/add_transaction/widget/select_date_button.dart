@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:moneymanager/presentation/getx/globel_controller.dart';
+import 'package:moneymanager/presentation/controllers/globel_controller.dart';
 
 class SelectDateButton extends StatelessWidget {
   const SelectDateButton(

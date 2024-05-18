@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:moneymanager/config/theme.dart';
-import 'package:moneymanager/presentation/getx/auth_controller.dart';
-import 'package:moneymanager/presentation/getx/internet_controller.dart';
+import 'package:moneymanager/presentation/controllers/auth_controller.dart';
 import 'package:moneymanager/presentation/views/auth/widget/login_form.dart';
 import 'package:moneymanager/presentation/widgets/toast_msg.dart';
 import 'package:moneymanager/utils/constant/color.dart';
@@ -16,7 +14,6 @@ class SignUpWid extends StatelessWidget {
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
     final lCtrl = Get.find<AuthCtrl>();
-    final internetC = Get.find<InternetController>();
 
     return Padding(
       padding: const EdgeInsets.only(top: 25),
@@ -73,9 +70,10 @@ class SignUpWid extends StatelessWidget {
                               style: AppTheme.buttonStyle,
                               onPressed: () async {
                                 if (formKey.currentState!.validate()) {
-                                  internetC.checkInternet();
-                                  if (internetC.hasInternet.value) {
+                                  await ctrl.checkInternet();
+                                  if (ctrl.hasInternet) {
                                     await lCtrl
+                                        // ignore: use_build_context_synchronously
                                         .signUpWithEmailAndPassword(context);
                                   } else {
                                     messageToast('Internet Required');

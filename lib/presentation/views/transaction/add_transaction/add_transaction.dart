@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:moneymanager/presentation/getx/globel_controller.dart';
+import 'package:moneymanager/presentation/controllers/globel_controller.dart';
 import 'package:moneymanager/presentation/views/transaction/add_transaction/widget/transaction_body.dart';
 
 class AddTransaction extends StatefulWidget {
