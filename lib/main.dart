@@ -11,7 +11,6 @@ import 'package:moneymanager/utils/constant/color.dart';
 import 'package:moneymanager/utils/resouces/init_controllers.dart';
 import 'package:moneymanager/utils/resouces/notification.dart';
 import 'package:timezone/data/latest.dart' as tz;
-import 'package:timezone/timezone.dart' as tz;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,11 +26,9 @@ void main() async {
     Hive.registerAdapter(TransactionModelAdapter());
   }
 
-  tz.initializeTimeZones();
-  tz.setLocalLocation(tz.getLocation('Asia/Kolkata'));
-  NotificationSetup.init();
   InitCtrl().init();
-  await NotificationSetup.scheduleDailyNotification();
+  NotificationService().initNotification();
+  tz.initializeTimeZones();
   runApp(const MyApp());
 }
 

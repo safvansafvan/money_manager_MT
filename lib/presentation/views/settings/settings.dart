@@ -19,6 +19,8 @@ class Settings extends StatelessWidget {
           SettingsTileWidget(
               icon: Icons.share_outlined, text: 'Share', isShare: true),
           SettingsTileWidget(
+              icon: Icons.alarm_add, text: 'Reminder', isReminder: true),
+          SettingsTileWidget(
               icon: Icons.restore, text: 'Reset App', resetApp: true),
           SettingsTileWidget(icon: Icons.logout, text: 'Logout', logout: true),
         ],

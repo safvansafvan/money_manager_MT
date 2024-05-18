@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:moneymanager/config/theme.dart';
 import 'package:moneymanager/presentation/controllers/auth_controller.dart';
 import 'package:moneymanager/presentation/controllers/category_db_controller.dart';
+import 'package:moneymanager/presentation/controllers/globel_controller.dart';
 import 'package:moneymanager/presentation/controllers/transaction_db_controller.dart';
 import 'package:moneymanager/presentation/views/settings/view/feedback.dart';
 import 'package:moneymanager/utils/constant/color.dart';
@@ -19,14 +22,15 @@ class SettingsTileWidget extends StatelessWidget {
       required this.icon,
       required this.text,
       this.isFeedback = false,
-      this.logout,
+      this.logout = false,
+      this.isReminder,
       this.isShare = false,
       this.resetApp = false});
   final IconData icon;
   final String text;
   bool? isFeedback;
   bool? logout;
-
+  bool? isReminder;
   bool? isShare;
   bool? resetApp;
   @override
@@ -44,6 +48,11 @@ class SettingsTileWidget extends StatelessWidget {
           await restAppDialog(context);
         } else if (logout == true) {
           await Get.find<AuthCtrl>().logout(context);
+        }
+        if (isReminder == true) {
+          log('message');
+          // ignore: use_build_context_synchronously
+          Get.find<GlobelController>().selectTime(context);
         }
       },
       child: Container(
