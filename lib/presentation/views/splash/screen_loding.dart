@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:moneymanager/presentation/getx/category_db_controller.dart';
 import 'package:moneymanager/presentation/getx/transaction_db_controller.dart';
+import 'package:moneymanager/presentation/views/auth/auth.dart';
 import 'package:moneymanager/presentation/views/home/home_screen.dart';
 import 'package:moneymanager/utils/constant/color.dart';
 import 'package:moneymanager/utils/constant/duration.dart';
@@ -49,7 +50,7 @@ class _InitialScreenState extends State<InitialScreen> {
 
   Future<void> navigation(context) async {
     await Future.delayed(const Duration(seconds: 3), () {});
-    await Get.to(() => const MyHomeScreen(),
+    await Get.to(() => const LoginView(),
         transition: Transition.zoom,
         curve: Curves.easeOut,
         duration: AppDuration.appDuration);

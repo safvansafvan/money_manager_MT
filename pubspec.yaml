@@ -25,6 +25,9 @@ dependencies:
   aligned_dialog: ^0.0.7
   flutter_local_notifications: ^17.1.2
   timezone: ^0.9.3
+  email_validator: ^2.1.17
+  firebase_core: ^2.27.2
+  firebase_auth: ^4.18.0
 
 dev_dependencies:
   flutter_test:

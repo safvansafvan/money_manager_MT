@@ -17,9 +17,7 @@ class SettingsTileWidget extends StatelessWidget {
       {super.key,
       required this.icon,
       required this.text,
-      this.isAboutus = false,
       this.isFeedback = false,
-      this.isPrivacy = false,
       this.isShare = false,
       this.resetApp = false});
   final IconData icon;
@@ -50,7 +48,7 @@ class SettingsTileWidget extends StatelessWidget {
         decoration: BoxDecoration(
           color: CustomColors.containerColor,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: CustomColors.commonClr),
+          border: Border.all(color: Colors.grey[300]!),
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
