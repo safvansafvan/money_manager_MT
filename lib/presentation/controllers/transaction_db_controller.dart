@@ -90,7 +90,6 @@ class TransactionDbController extends GetxController {
     final transactionBox =
         await Hive.openBox<TransactionModel>(transactionDbName);
     await transactionBox.put(value.id, value);
-
     await refreshTransaction();
   }
 

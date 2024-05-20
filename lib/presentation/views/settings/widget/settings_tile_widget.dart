@@ -126,6 +126,6 @@ class SettingsTileWidget extends StatelessWidget {
   }
 
   Future<void> shareApp() async {
-    await Share.share('https://www.amazon.com/gp/product/B0CLKW1ZZJ');
+    await Share.share('www.www.ww');
   }
 }
